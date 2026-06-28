@@ -6,20 +6,20 @@
 
 | category | algorithm | variants | best for |
 |---|---|---|---|
-| **evolutionary** | Genetic Algorithm (GA) | polynomial mutation | combinatorial, real-valued, feature selection |
-| | Differential Evolution | rand1bin, best1bin, ctbest1bin, JADE, **SHADE**, **L-SHADE** | continuous and single-objective |
-| | CMA-ES | IPOP restarts | Continuous (dim ≤ 200) |
-| **Swarm** | Particle Swarm) | **CLPSO** | continuous and fast convergence |
-| | Artificial Bee Colony | — | multi-modal continuous |
-| | Grey Wolf Optimizer | — | continuous, simple and fast |
-| | Firefly Algorithm | — | multi-modal, attraction-based |
-| **annealing** | Simulated Annealing | exponential, linear, logarithmic, adaptive cooling | discrete and continuous |
-| **bayesian** | Bayesian Optimisation | EI, UCB, PI acquisition; ARD GP surrogate | expensive black-box functions |
+| **evolutionary** | Genetic algorithm (GA) | polynomial mutation | combinatorial, real-valued, feature selection |
+| | Differential evolution | rand1bin, best1bin, ctbest1bin, JADE, **SHADE**, **L-SHADE** | continuous and single-objective |
+| | CMA-ES | IPOP restarts | continuous (dim ≤ 200) |
+| **swarm** | Particle swarm | **CLPSO** | continuous and fast convergence |
+| | Artificial bee colony | — | multi-modal continuous |
+| | Grey Wolf optimizer | — | continuous, simple and fast |
+| | Firefly algorithm | — | multi-modal, attraction-based |
+| **annealing** | Simulated annealing | exponential, linear, logarithmic, adaptive cooling | discrete and continuous |
+| **bayesian** | Bayesian optimisation | EI, UCB, PI acquisition; ARD GP surrogate | expensive black-box functions |
 | **direct Search** | Nelder-Mead simplex | adaptive coefficients | smooth low-D w. no gradients |
-| | generalised Pattern Search | LHS search step | noisy, non-smooth |
-| **distribution** | Cross-Entropy Method | gaussian with smoothing | continuous |
-| **discrete** | Tabu Search | 2-opt, aspiration criterion | TSP, combinatorial |
-| | Ant Colony (ACO) | **Ant System** + **MAX-MIN AS** | TSP, routing problems |
+| | generalised Pattern search | LHS search step | noisy, non-smooth |
+| **distribution** | Cross-Entropy method | gaussian with smoothing | continuous |
+| **discrete** | Tabu search | 2-opt, aspiration criterion | TSP, combinatorial |
+| | Ant Colony (ACO) | **Ant system** + **MAX-MIN AS** | TSP, routing problems |
 
 ---
 

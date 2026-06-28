@@ -70,7 +70,7 @@ result.history  # best/mean/std values at each iter
 
 ---
 
-## Constraint Handling
+## constraint handling
 
 ```python
 from optlib.preprocessing.preprocessing import PenaltyConstraintHandler
@@ -86,7 +86,7 @@ result = oz.CMAES().optimize(penalised_obj, bounds)
 
 ---
 
-## Discrete problems
+## discrete problems
 
 ```python
 from optlib.benchmarks           import TSP
@@ -103,7 +103,7 @@ tour, length, history = solve_tsp_tabu(tsp, tabu_tenure=15, seed=42)
 
 ---
 
-## Visualise
+## visualise
 
 ```python
 from optlib.visualization.plots import (
@@ -118,7 +118,7 @@ from optlib.visualization.plots import (
 
 ---
 
-## Demos
+## demos
 
 to run demos:
 ```bash

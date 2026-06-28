@@ -4,18 +4,18 @@
 
 ---
 
-| category | algorithm | variants | best for |
+| category | algorithm | types | best for |
 |---|---|---|---|
-| **evolutionary** | Genetic algorithm (GA) | polynomial mutation | combinatorial, real-valued, feature selection |
+| **evolutionary** | Genetic algorithm | polynomial mutation | combinatorial, real-valued, feature selection |
 | | Differential evolution | rand1bin, best1bin, ctbest1bin, JADE, **SHADE**, **L-SHADE** | continuous and single-objective |
 | | CMA-ES | IPOP restarts | continuous (dim ≤ 200) |
 | **swarm** | Particle swarm | **CLPSO** | continuous and fast convergence |
 | | Artificial bee colony | — | multi-modal continuous |
-| | Grey Wolf optimizer | — | continuous, simple and fast |
+| | Grey Wolf optim | — | continuous, simple and fast |
 | | Firefly algorithm | — | multi-modal, attraction-based |
 | **annealing** | Simulated annealing | exponential, linear, logarithmic, adaptive cooling | discrete and continuous |
 | **bayesian** | Bayesian optimisation | EI, UCB, PI acquisition; ARD GP surrogate | expensive black-box functions |
-| **direct Search** | Nelder-Mead simplex | adaptive coefficients | smooth low-D w. no gradients |
+| **direct Search** | Nelder-Mead simplex | adaptive coefficients | smooth low-dim w. no gradients |
 | | generalised Pattern search | LHS search step | noisy, non-smooth |
 | **distribution** | Cross-Entropy method | gaussian with smoothing | continuous |
 | **discrete** | Tabu search | 2-opt, aspiration criterion | TSP, combinatorial |

@@ -48,7 +48,7 @@ class FireflyAlgorithm(BaseOptimizer):
                 history.record(it, best_f, fits.mean(), fits.std(),
                                elapsed=elapsed, nfev=nfev, alpha=alpha)
             self._log(it, best_f, nfev=nfev, elapsed=elapsed, alpha=alpha)
-            if best_f < tol: break
+            if 0.0 <= best_f < tol: break
 
         return OptimizationResult(x=best_x, fun=best_f, nfev=nfev, nit=it,
             success=best_f<tol, message="FA completed",

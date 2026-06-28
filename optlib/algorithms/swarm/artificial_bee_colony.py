@@ -63,7 +63,7 @@ class ArtificialBeeColony(BaseOptimizer):
                 history.record(it, best_f, fits.mean(), fits.std(),
                                elapsed=elapsed, nfev=nfev, scouts=int(scouts.size))
             self._log(it, best_f, nfev=nfev, elapsed=elapsed)
-            if best_f < tol: break
+            if 0.0 <= best_f < tol: break
 
         return OptimizationResult(x=best_x, fun=best_f, nfev=nfev, nit=it,
             success=best_f<tol, message="ABC completed",

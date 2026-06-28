@@ -54,7 +54,7 @@ class SimulatedAnnealing(BaseOptimizer):
                 history.record(it, best_f, f, float('nan'),
                                elapsed=elapsed, nfev=nfev, T=T, accept_rate=rate)
             self._log(it, best_f, nfev=nfev, elapsed=elapsed, T=T)
-            if best_f < tol or T < self.Tf: break
+            if 0.0 <= best_f < tol or T < self.Tf: break
 
         return OptimizationResult(x=best_x, fun=best_f, nfev=nfev, nit=it,
             success=best_f<tol, message=f"SA-{self.schedule} completed",

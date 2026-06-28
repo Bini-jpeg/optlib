@@ -122,7 +122,7 @@ class BayesianOptimization(BaseOptimizer):
                 history.record(it, best_f, float(np.mean(Y)), float(np.std(Y)),
                                elapsed=elapsed, nfev=nfev)
             self._log(it, best_f, nfev=nfev, elapsed=elapsed, n_pts=len(Y))
-            if best_f < tol: break
+            if 0.0 <= best_f < tol: break
 
         return OptimizationResult(x=best_x, fun=best_f, nfev=nfev, nit=it,
             success=best_f<tol, message=f"BayesOpt-{self.acquisition} completed",

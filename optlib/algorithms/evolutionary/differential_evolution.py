@@ -122,12 +122,12 @@ class DifferentialEvolution(BaseOptimizer):
                                NP=NP, F=float(np.mean(S_F)) if S_F else self.F0)
             self._log(it, best_f, nfev=nfev, elapsed=elapsed, NP=NP)
 
-            if best_f < tol:
+            if 0.0 <= best_f < tol:
                 break
 
         return OptimizationResult(
             x=best_x, fun=best_f, nfev=nfev, nit=it,
-            success=best_f < tol, message=f"DE-{self.strategy} completed",
+            success=0.0 <= best_f < tol, message=f"DE-{self.strategy} completed",
             history=history, algorithm=self._name,
             elapsed=time.perf_counter() - t0)
 

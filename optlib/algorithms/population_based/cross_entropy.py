@@ -39,7 +39,7 @@ class CrossEntropyMethod(BaseOptimizer):
                 history.record(it, best_f, fits.mean(), fits.std(),
                                elapsed=elapsed, nfev=nfev, sigma_mean=float(sigma.mean()))
             self._log(it, best_f, nfev=nfev, elapsed=elapsed, sigma=float(sigma.mean()))
-            if best_f < tol or sigma.max() < self.sigma_min*10: break
+            if 0.0 <= best_f < tol or sigma.max() < self.sigma_min*10: break
 
         return OptimizationResult(x=best_x, fun=best_f, nfev=nfev, nit=it,
             success=best_f<tol, message="CEM completed",

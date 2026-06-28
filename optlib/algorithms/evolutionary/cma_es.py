@@ -40,7 +40,7 @@ class CMAES(BaseOptimizer):
 
         return OptimizationResult(
             x=g_best_x, fun=g_best_f, nfev=nfev, nit=total_it,
-            success=g_best_f < self.tol_fun, message="CMA-ES completed",
+            success=0.0 <= g_best_f < self.tol_fun, message="CMA-ES completed",
             history=history, algorithm=self._name,
             elapsed=time.perf_counter()-t0)
 
@@ -109,7 +109,7 @@ class CMAES(BaseOptimizer):
                                elapsed=elapsed, nfev=nfev, sigma=sigma)
             self._log(it, best_f, nfev=nfev, elapsed=elapsed, sigma=sigma)
 
-            if best_f < self.tol_fun: break
+            if 0.0 <= best_f < self.tol_fun: break
             n_tail = 10+int(30*d/lam)
             if len(hist)>=n_tail and max(hist[-n_tail:])-min(hist[-n_tail:])<self.tol_fun: break
             if sigma*np.max(D) < self.tol_x: break

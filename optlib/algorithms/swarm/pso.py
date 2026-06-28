@@ -46,10 +46,10 @@ class PSO(BaseOptimizer):
                 history.record(it, gbest_f, fits.mean(), fits.std(),
                                elapsed=elapsed, nfev=nfev, w=w)
             self._log(it, gbest_f, nfev=nfev, elapsed=elapsed, w=w)
-            if gbest_f < tol: break
+            if 0.0 <= gbest_f < tol: break
 
         return OptimizationResult(x=gbest, fun=gbest_f, nfev=nfev, nit=it,
-            success=gbest_f<tol, message="PSO completed",
+            success=0.0 <= gbest_f < tol, message="PSO completed",
             history=history, algorithm=self._name, elapsed=time.perf_counter()-t0)
 
 
@@ -103,8 +103,8 @@ class CLPSO(BaseOptimizer):
                 history.record(it, gbest_f, fits.mean(), fits.std(),
                                elapsed=elapsed, nfev=nfev, w=w)
             self._log(it, gbest_f, nfev=nfev, elapsed=elapsed, w=w)
-            if gbest_f < tol: break
+            if 0.0 <= gbest_f < tol: break
 
         return OptimizationResult(x=gbest, fun=gbest_f, nfev=nfev, nit=it,
-            success=gbest_f<tol, message="CLPSO completed",
+            success=0.0 <= gbest_f < tol, message="CLPSO completed",
             history=history, algorithm=self._name, elapsed=time.perf_counter()-t0)

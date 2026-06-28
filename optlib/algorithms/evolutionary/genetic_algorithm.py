@@ -87,7 +87,7 @@ class GeneticAlgorithm(BaseOptimizer):
                                elapsed=elapsed, nfev=nfev)
             self._log(it, best_f, nfev=nfev, elapsed=elapsed, mean=fits.mean())
 
-            if best_f < tol:
+            if 0.0 <= best_f < tol:
                 break
             if it >= n_tol_check:
                 recent = history.best_values[-n_tol_check:]
@@ -96,7 +96,7 @@ class GeneticAlgorithm(BaseOptimizer):
 
         return OptimizationResult(
             x=best_x, fun=best_f, nfev=nfev, nit=it,
-            success=best_f < tol, message="GA completed",
+            success=0.0 <= best_f < tol, message="GA completed",
             history=history, algorithm=self._name,
             elapsed=time.perf_counter() - t0)
 

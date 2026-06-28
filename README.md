@@ -1,82 +1,71 @@
-# optlib 🦁
+# optlib - gradient-free optimizer library
 
-> **A comprehensive, from-scratch optimisation library that goes far beyond gradient descent.**
-
-`optlib` implements 14 major metaheuristic and derivative-free optimisation algorithms — many with multiple SOTA variants — in clean, efficient NumPy/SciPy code. It includes preprocessing utilities, structured logging, rich visualisations, standard benchmarks, and five end-to-end demo scripts.
+`optlib` implements 14 derivative-free optimisation algorithms. it includes preprocessing, logging, visualisations, benchmarks and some demos. I initially built it for specific tasks I had, but I decided to create a general mini library
 
 ---
 
-## Algorithms at a Glance
-
-| Category | Algorithm | Key Variant(s) | Best For |
+| category | algorithm | variants | best for |
 |---|---|---|---|
-| **Evolutionary** | Genetic Algorithm (GA) | SBX + polynomial mutation | Combinatorial, real-valued, feature selection |
-| | Differential Evolution (DE) | rand1bin, best1bin, ctbest1bin, JADE, **SHADE**, **L-SHADE** | Continuous, SOTA single-objective |
-| | CMA-ES | IPOP restarts | Continuous, moderate dimension (d ≤ 200) |
-| **Swarm** | Particle Swarm (PSO) | Standard + **CLPSO** | Continuous, fast convergence |
-| | Artificial Bee Colony (ABC) | — | Multi-modal continuous |
-| | Grey Wolf Optimizer (GWO) | — | Continuous, simple and fast |
-| | Firefly Algorithm (FA) | — | Multi-modal, attraction-based |
-| **Annealing** | Simulated Annealing (SA) | Exponential, linear, logarithmic, adaptive cooling | Discrete and continuous, escapes local optima |
-| **Bayesian** | Bayesian Optimisation (BO) | EI, UCB, PI acquisition; ARD GP surrogate | Expensive black-box functions (HPO) |
-| **Direct Search** | Nelder-Mead Simplex | Adaptive coefficients (Gao & Han) | Smooth low-D, no gradients |
-| | Generalised Pattern Search (GPS) | LHS search step | Noisy, non-smooth |
-| **Distribution** | Cross-Entropy Method (CEM) | Gaussian, with smoothing | Continuous, fast + simple |
-| **Discrete** | Tabu Search (TS) | 2-opt, aspiration criterion | TSP, combinatorial |
+| **Evolutionary** | Genetic Algorithm (GA) | polynomial mutation | combinatorial, real-valued, feature selection |
+| | Differential Evolution | rand1bin, best1bin, ctbest1bin, JADE, **SHADE**, **L-SHADE** | continuous and single-objective |
+| | CMA-ES | IPOP restarts | Continuous (dim ≤ 200) |
+| **Swarm** | Particle Swarm) | **CLPSO** | continuous and fast convergence |
+| | Artificial Bee Colony | — | multi-modal continuous |
+| | Grey Wolf Optimizer | — | continuous, simple and fast |
+| | Firefly Algorithm | — | multi-modal, attraction-based |
+| **Annealing** | Simulated Annealing | exponential, linear, logarithmic, adaptive cooling | discrete and continuous |
+| **Bayesian** | Bayesian Optimisation | EI, UCB, PI acquisition; ARD GP surrogate | expensive black-box functions |
+| **Direct Search** | Nelder-Mead simplex | adaptive coefficients | smooth low-D w. no gradients |
+| | Generalised Pattern Search | LHS search step | noisy, non-smooth |
+| **Distribution** | Cross-Entropy Method | gaussian with smoothing | continuous |
+| **Discrete** | Tabu Search | 2-opt, aspiration criterion | TSP, combinatorial |
 | | Ant Colony (ACO) | **Ant System** + **MAX-MIN AS** | TSP, routing problems |
 
 ---
 
-## Installation
+## Installing
 
 ```bash
 git clone https://github.com/your-handle/optlib.git
 cd optlib
-pip install -e .
-# or just: pip install -r requirements.txt
+pip install -r requirements.txt
+# or:   pip install -e .
 ```
-
-**Requirements**: Python ≥ 3.9, NumPy, SciPy, Matplotlib, scikit-learn
 
 ---
 
-## Quick Start
+## Usage
 
 ```python
 import optlib as oz
 from optlib.benchmarks import ackley
 
-bounds = [(-32.768, 32.768)] * 10   # 10-dimensional Ackley
+bounds = [(-32.768, 32.768)] * 10   # 10-dim ackley
 
-# ── L-SHADE (SOTA DE variant) ──────────────────────────────────────────────
 result = oz.DifferentialEvolution(strategy="lshade", seed=42, log_interval=50) \
            .optimize(ackley, bounds, max_iter=500)
 print(result)
 
-# ── CMA-ES with IPOP restarts ──────────────────────────────────────────────
 result = oz.CMAES(n_restarts=2, seed=42, log_interval=100) \
            .optimize(ackley, bounds, max_iter=5000)
 
-# ── Bayesian Optimisation (for expensive functions) ────────────────────────
 result = oz.BayesianOptimization(acquisition="ei", n_init=5) \
            .optimize(my_expensive_fn, bounds, max_iter=50)
 
-# ── Particle Swarm ────────────────────────────────────────────────────────
 result = oz.PSO(pop_size=40, seed=42).optimize(ackley, bounds, max_iter=300)
 
-# ── Simulated Annealing ───────────────────────────────────────────────────
 result = oz.SimulatedAnnealing(schedule="exponential") \
            .optimize(ackley, bounds, max_iter=10_000)
 ```
 
-All optimisers return a uniform `OptimizationResult`:
+All optimisers return a `OptimizationResult`:
 ```python
-result.x        # best solution (ndarray)
-result.fun      # best objective value (float)
+result.x        # best solution
+result.fun      # best objective value
 result.nfev     # function evaluations used
 result.nit      # iterations
-result.elapsed  # wall-clock time (seconds)
-result.history  # per-iteration best/mean/std values
+result.elapsed  # time in seconds
+result.history  # best/mean/std values at each iter
 ```
 
 ---
@@ -97,7 +86,7 @@ result = oz.CMAES().optimize(penalised_obj, bounds)
 
 ---
 
-## Discrete Problems
+## Discrete problems
 
 ```python
 from optlib.benchmarks           import TSP
@@ -106,26 +95,24 @@ from optlib.algorithms.discrete.tabu_search import solve_tsp_tabu
 
 tsp = TSP(n_cities=30, seed=42)
 
-# Ant Colony (MAX-MIN Ant System)
 aco = AntColonyTSP(variant="MMAS", seed=42, log_interval=20)
 tour, length, history = aco.solve(tsp, max_iter=200)
 
-# Tabu Search with 2-opt
 tour, length, history = solve_tsp_tabu(tsp, tabu_tenure=15, seed=42)
 ```
 
 ---
 
-## Visualisations
+## Visualise
 
 ```python
 from optlib.visualization.plots import (
-    plot_convergence,           # convergence curves (multiple algos)
-    plot_comparison_boxplot,    # box-plot final values N runs
-    plot_landscape_2d,          # contour map + trajectory overlay
-    plot_tsp_tour,              # route plot for TSP
-    plot_multirun_convergence,  # median ± IQR bands
-    plot_benchmark_table,       # colour-coded summary table
+    plot_convergence,
+    plot_comparison_boxplot,
+    plot_landscape_2d,
+    plot_tsp_tour,
+    plot_multirun_convergence,
+    plot_benchmark_table,
 )
 ```
 
@@ -133,15 +120,7 @@ from optlib.visualization.plots import (
 
 ## Demos
 
-| Script | What it shows |
-|---|---|
-| `demos/demo_01_benchmark_comparison.py` | All continuous optimisers on Ackley, Rastrigin, Rosenbrock, Schwefel |
-| `demos/demo_02_tsp.py` | GA, SA, Tabu Search, ACO-MMAS on a 25-city TSP |
-| `demos/demo_03_bayesian_hpo.py` | Bayesian Opt vs PSO vs CEM for SVM hyperparameter tuning |
-| `demos/demo_04_engineering_design.py` | Constrained pressure-vessel design — DE/SA/CMA-ES/GWO |
-| `demos/demo_05_feature_selection.py` | Binary GA for feature selection on Breast Cancer dataset |
-
-Run all demos:
+to run demos:
 ```bash
 python demos/demo_01_benchmark_comparison.py
 python demos/demo_02_tsp.py
@@ -149,111 +128,35 @@ python demos/demo_03_bayesian_hpo.py
 python demos/demo_04_engineering_design.py
 python demos/demo_05_feature_selection.py
 ```
-Outputs land in `outputs/demo0*/`.
+outputs will be in `outputs/demo0*/`.
 
 ---
 
-## Run Tests
-
-```bash
-python tests/test_algorithms.py
-```
-Tests all 22+ algorithm variants on Sphere and Rosenbrock, plus TSP smoke-tests.
-
----
-
-## Algorithm Selection Guide
+## which algo to use
 
 ```
-Your problem is...
-├── Continuous, smooth, cheap evaluations
+if your problem is...
+├── continuous, smooth, cheap to eval
 │   ├── d ≤ 20         → CMA-ES or Nelder-Mead
 │   ├── d ≤ 200        → CMA-ES or L-SHADE
 │   └── d > 200        → L-SHADE or PSO
 │
-├── Continuous, multimodal (many local minima)
-│   ├── Fast           → DE-L-SHADE, GWO
-│   └── Very multimodal → FA + Firefly, PSO-CLPSO
+├── continuous and multimodal
+│   ├── quick           → DE-L-SHADE, GWO
+│   └── very multimodal → FA + Firefly, PSO-CLPSO
 │
-├── Expensive (< 500 evaluations budget)
-│   └──                → Bayesian Optimisation (BO)
+├── expensive to evaluate
+│   └──                → Bayesian
 │
-├── Continuous, constrained
-│   ├── Smooth         → CMA-ES + penalty, or DE + penalty
-│   └── Non-smooth     → SA or Pattern Search
+├── continuous with constrains
+│   ├── smooth         → CMA-ES + penalty, or DE + penalty
+│   └── non-smooth     → SA or pattern search
 │
-├── Discrete / combinatorial
-│   ├── Routing (TSP)  → ACO-MMAS or Tabu Search
-│   ├── Binary vectors → Binary GA
-│   └── General        → SA (with custom neighbour_fn)
+├── discrete / combinatorial
+│   ├── routing (TSP)  → ACO-MMAS or Tabu Search
+│   ├── binary vectors → Binary GA
+│   └── general        → SA (with custom neighbour_fn)
 │
-└── Noisy / stochastic
+└── noisy / stochastic
     └──                → CEM, SA, or Bayesian Opt
 ```
-
----
-
-## Project Structure
-
-```
-optlib/
-├── optlib/
-│   ├── base.py                          # BaseOptimizer, OptimizationResult
-│   ├── algorithms/
-│   │   ├── evolutionary/
-│   │   │   ├── genetic_algorithm.py     # GA (SBX + polynomial mutation)
-│   │   │   ├── differential_evolution.py # DE + JADE + SHADE + L-SHADE
-│   │   │   └── cma_es.py               # CMA-ES (IPOP restarts)
-│   │   ├── swarm/
-│   │   │   ├── pso.py                  # Standard PSO + CLPSO
-│   │   │   ├── artificial_bee_colony.py
-│   │   │   ├── grey_wolf.py
-│   │   │   └── firefly.py
-│   │   ├── annealing/
-│   │   │   └── simulated_annealing.py  # 4 cooling schedules
-│   │   ├── bayesian/
-│   │   │   └── bayesian_optimization.py # GP surrogate + EI/UCB/PI
-│   │   ├── direct_search/
-│   │   │   ├── nelder_mead.py
-│   │   │   └── pattern_search.py
-│   │   ├── population_based/
-│   │   │   └── cross_entropy.py
-│   │   └── discrete/
-│   │       ├── tabu_search.py
-│   │       └── ant_colony.py           # Ant System + MAX-MIN AS
-│   ├── preprocessing/
-│   │   └── preprocessing.py            # MinMax/Standard scalers, LHS, constraint handlers
-│   ├── logging_utils/
-│   │   └── logger.py
-│   ├── visualization/
-│   │   └── plots.py                    # 7 plot types
-│   └── benchmarks/
-│       ├── continuous_functions.py     # 15 standard test functions
-│       └── discrete_problems.py        # TSP + 0/1 Knapsack
-├── demos/                              # 5 end-to-end demo scripts
-├── tests/
-│   └── test_algorithms.py
-├── requirements.txt
-└── setup.py
-```
-
----
-
-## References
-
-- **DE/L-SHADE**: Tanabe & Fukunaga (2014). *Improving the Search Performance of SHADE Using Linear Population Size Reduction.*
-- **CMA-ES**: Hansen (2016). *The CMA Evolution Strategy: A Tutorial.* arXiv:1604.00772.
-- **ABC**: Karaboga (2005). *An Idea Based on Honey Bee Swarm for Numerical Optimization.*
-- **PSO/CLPSO**: Liang et al. (2006). *Comprehensive Learning Particle Swarm Optimizer.*
-- **GWO**: Mirjalili et al. (2014). *Grey Wolf Optimizer.*
-- **Firefly**: Yang (2009). *Firefly Algorithms for Multimodal Optimization.*
-- **CEM**: Rubinstein & Kroese (2004). *The Cross-Entropy Method.*
-- **GPS**: Torczon (1997). *On the Convergence of Pattern Search Algorithms.*
-- **MMAS**: Stützle & Hoos (2000). *MAX-MIN Ant System.*
-- **Tabu Search**: Glover (1989). *Tabu Search — Part I.*
-
----
-
-## License
-
-MIT — see `LICENSE`.

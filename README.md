@@ -1,6 +1,6 @@
 # optlib - gradient-free optimizer library
 
-`optlib` has 14 derivative-free optimisation algorithms. it includes preprocessing, logging, visualisations, benchmarks and some demos. I initially built it for specific tasks I had, but I decided to create a general mini library
+`optlib` has 14 optimisation algorithms. it includes preprocessing, logging, visualisations, benchmarks and some demos. I initially built it for specific tasks I had, but I decided to create a general mini library
 
 ---
 

@@ -6,19 +6,19 @@
 
 | category | algorithm | variants | best for |
 |---|---|---|---|
-| **Evolutionary** | Genetic Algorithm (GA) | polynomial mutation | combinatorial, real-valued, feature selection |
+| **evolutionary** | Genetic Algorithm (GA) | polynomial mutation | combinatorial, real-valued, feature selection |
 | | Differential Evolution | rand1bin, best1bin, ctbest1bin, JADE, **SHADE**, **L-SHADE** | continuous and single-objective |
 | | CMA-ES | IPOP restarts | Continuous (dim ≤ 200) |
 | **Swarm** | Particle Swarm) | **CLPSO** | continuous and fast convergence |
 | | Artificial Bee Colony | — | multi-modal continuous |
 | | Grey Wolf Optimizer | — | continuous, simple and fast |
 | | Firefly Algorithm | — | multi-modal, attraction-based |
-| **Annealing** | Simulated Annealing | exponential, linear, logarithmic, adaptive cooling | discrete and continuous |
-| **Bayesian** | Bayesian Optimisation | EI, UCB, PI acquisition; ARD GP surrogate | expensive black-box functions |
-| **Direct Search** | Nelder-Mead simplex | adaptive coefficients | smooth low-D w. no gradients |
-| | Generalised Pattern Search | LHS search step | noisy, non-smooth |
-| **Distribution** | Cross-Entropy Method | gaussian with smoothing | continuous |
-| **Discrete** | Tabu Search | 2-opt, aspiration criterion | TSP, combinatorial |
+| **annealing** | Simulated Annealing | exponential, linear, logarithmic, adaptive cooling | discrete and continuous |
+| **bayesian** | Bayesian Optimisation | EI, UCB, PI acquisition; ARD GP surrogate | expensive black-box functions |
+| **direct Search** | Nelder-Mead simplex | adaptive coefficients | smooth low-D w. no gradients |
+| | generalised Pattern Search | LHS search step | noisy, non-smooth |
+| **distribution** | Cross-Entropy Method | gaussian with smoothing | continuous |
+| **discrete** | Tabu Search | 2-opt, aspiration criterion | TSP, combinatorial |
 | | Ant Colony (ACO) | **Ant System** + **MAX-MIN AS** | TSP, routing problems |
 
 ---
